@@ -131,7 +131,7 @@ const getAllPostController = async (req, res) => {
       const result = await Post.aggregate([
         {
           $match: {
-            author: creator,
+            author: new mongoose.Types.ObjectId(creator),
           },
         },
         {
@@ -166,6 +166,7 @@ const getAllPostController = async (req, res) => {
       message: "Post Updated Successfully",
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ errorMessage: "Internal Server Error" });
   }
 };
