@@ -273,6 +273,7 @@ const getPublicPostController = async (req, res) => {
     if (user) {
       isEditable = true;
     }
+    
 
     return {
       ...comment,
@@ -281,6 +282,7 @@ const getPublicPostController = async (req, res) => {
       replies: repliesByParentId[comment._id] || [],
     };
   });
+  await Post.findByIdAndUpdate(postId, { $inc: { views: 1 } });
   res.status(200).send({ post, comments: commentsWithReplies });
 };
 
